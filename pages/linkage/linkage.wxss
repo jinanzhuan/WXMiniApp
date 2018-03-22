@@ -1,0 +1,10 @@
+/* pages/linkage/linkage.wxss */
+@import '../../template/index.wxss';
+
+page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 100rpx;
+    overflow: hidden;
+}

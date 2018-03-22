@@ -1,0 +1,10 @@
+<!--pages/linkage/linkage.wxml-->
+<view class="show">{{areaPicker.address}}</view>
+
+<button bindtap="getSelecedData" type="primary">获取已选择的城市信息</button>
+
+<view  hidden="{{showArea}}">
+    <import src="../../template/index.wxml"/>
+    <template is="areaPicker" data="{{...areaPicker}}" />
+</view>
+
