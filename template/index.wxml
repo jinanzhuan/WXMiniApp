@@ -1,17 +1,21 @@
 <template name="areaPicker">
-    <view class="button_select">
-      <button class="cancel">取消</button>
-      <button class="ok">确定</button>
+    <view class="container" >
+        <view class="button_select">
+            <view class="cancel" bindtap="cancel" data-statu="close">取消</view>
+            <view class="ok" bindtap="sure" data-statu="close">确定</view>
+        </view>
+        <view class="line bottom" />
+        <picker-view class="picker-view" indicator-style="height: 50px;" style="width: 100%; height: 300px;" value="{{value}}" bindchange="bindChange">
+            <picker-view-column >
+                <view wx:for="{{provinceData}}" wx:key="code" class="addr-item">{{item.fullNameDot}}  </view>
+            </picker-view-column>
+            <picker-view-column >
+                <view wx:for="{{cityData}}" wx:key="code" class="addr-item">{{item.fullNameDot}}</view>
+            </picker-view-column>
+            <picker-view-column wx:if="{{hideDistrict}}">
+                <view wx:for="{{districtData}}" wx:key="code" class="addr-item">{{item.fullNameDot}}</view>
+            </picker-view-column>
+        </picker-view>
     </view>
-    <picker-view class="picker-view" indicator-style="height: 50px;" style="width: 100%; height: 300px;" value="{{value}}" bindchange="bindChange">
-      <picker-view-column>
-        <view wx:for="{{provinceData}}" wx:key="code" class="addr-item">{{item.fullNameDot}}  </view>
-      </picker-view-column>
-      <picker-view-column>
-        <view wx:for="{{cityData}}" wx:key="code" class="addr-item">{{item.fullNameDot}}</view>
-      </picker-view-column>
-      <picker-view-column wx:if="{{hideDistrict}}">
-        <view wx:for="{{districtData}}" wx:key="code" class="addr-item">{{item.fullNameDot}}</view>
-      </picker-view-column>
-    </picker-view>
+
 </template>
