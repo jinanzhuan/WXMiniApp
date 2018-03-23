@@ -1,5 +1,5 @@
 <template name="areaPicker">
-    <view class="container" >
+    <view class="area_container" >
         <view class="button_select">
             <view class="cancel" bindtap="cancel" data-statu="close">取消</view>
             <view class="ok" bindtap="sure" data-statu="close">确定</view>

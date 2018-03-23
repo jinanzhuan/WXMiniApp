@@ -1,11 +1,17 @@
 <!--pages/linkage/linkage.wxml-->
-<view class="show">{{areaPicker.address}}</view>
+<view class="container_index">
+    <view class="show">{{addressModel}}</view>
 
-<button bindtap="getSelecedData" type="primary">获取已选择的城市信息</button>
-<button bindtap="showAreaPicker" type="primary" style="margin-top: 50rpx;" data-statu="open">显示地区</button>
+    <button bindtap="getSelecedData" type="primary">获取已选择的城市信息</button>
+    <button bindtap="showAreaPicker" type="primary" style="margin-top: 50rpx;" data-statu="open">显示地区</button>
 
-<view animation="{{animationData}}"  wx:if="{{showModalStatus}}">
-    <import src="../../template/index.wxml"/>
-    <template is="areaPicker" data="{{...areaPicker}}" />
+    <view class="areaSelect" wx:if="{{showModalStatus}}" animation="{{animationPopup}}" >
+        <view class="pop_black" bindtap="closePop" hidden="{{hidePop}}" />
+
+        <import src="../../template/index.wxml"/>
+        <template is="areaPicker" data="{{...areaPicker}}" />
+
+    </view>
 </view>
+
 

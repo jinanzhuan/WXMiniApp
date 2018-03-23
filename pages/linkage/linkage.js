@@ -3,7 +3,9 @@ import initAreaPicker, { getSelectedAreaData } from '../../template/index';
 
 Page({
   data:{
-      showModalStatus: true
+      showModalStatus: true,
+      hidePop: false,
+      addressModel: ""
   },
   /**
    * 生命周期函数--监听页面显示
@@ -17,69 +19,67 @@ Page({
         console.table(getSelectedAreaData());
     },
     showAreaPicker(e){
-        var currentStatu = e.currentTarget.dataset.statu;
-        this.util(currentStatu)
+        this.showMoreSelect();
+    },
+    closePop(){
+        console.log("close");
+        this.closePopupTap();
     },
     cancel(e){
         console.log("cancel");
-        var currentStatu = e.currentTarget.dataset.statu;
-        this.util(currentStatu)
+        this.closePopupTap();
     },
     sure(e){
         console.log("make sure");
-        var currentStatu = e.currentTarget.dataset.statu;
-        this.util(currentStatu)
-    },
-    util: function(currentStatu){
-        /* 动画部分 */
-        // 第1步：创建动画实例
-        var animation = wx.createAnimation({
-            duration: 200,  //动画时长
-            timingFunction: "linear", //线性
-            delay: 0  //0则不延迟
-        });
-
-        // 第2步：这个动画实例赋给当前的动画实例
-        this.animation = animation;
-
-        // 第3步：执行第一组动画
-        animation.opacity(0).rotateX(-100).step();
-
-        // 第4步：导出动画对象赋给数据对象储存
         this.setData({
-            animationData: animation.export()
+            addressModel: this.data.areaPicker.address
         })
-
-        // 第5步：设置定时器到指定时候后，执行第二组动画
+        this.closePopupTap();
+    },
+    showMoreSelect: function () {
+        this.setData({
+            showModalStatus: true
+        })
+        var animation = wx.createAnimation({
+            duration: 200,
+            timingFunction: 'ease',
+            delay: 0  //0则不延迟
+        })
+        this.animation = animation;
+        animation.translateY(0).step()
+        this.setData({
+            animationPopup: animation.export(),
+        })
         setTimeout(function () {
-            // 执行第二组动画
-            animation.opacity(1).rotateX(0).step();
-            // 给数据对象储存的第一组动画，更替为执行完第二组动画的动画对象
+            animation.translateY(0).step()
             this.setData({
-                animationData: animation
+                animationPopup: animation,
+                hidePop: false
             })
-
-            //关闭
-            if (currentStatu == "close") {
-                this.setData(
-                    {
-                        showModalStatus: false
-                    }
-                );
-                wx.showToast({
-                    title: '预约失败',
-                    icon: "none"
-                })
-            }
         }.bind(this), 200)
-
-        // 显示
-        if (currentStatu == "open") {
-            this.setData(
-                {
-                    showModalStatus: true
-                }
-            );
-        }
+    },
+    /**
+     * 规格选择弹出框隐藏
+     **/
+    closePopupTap: function () {
+        this.setData({
+            showModalStatus: false
+        })
+        var animation = wx.createAnimation({
+            duration: 200,
+            timingFunction: 'ease',
+            delay: 0  //0则不延迟
+        })
+        animation.translateY(500).step()
+        this.animation = animation
+        this.setData({
+            animationPopup: animation.export(),
+        })
+        setTimeout(function () {
+            this.setData({
+                showModalStatus: false,
+                hidePop: true
+            })
+        }.bind(this), 200)
     }
 })

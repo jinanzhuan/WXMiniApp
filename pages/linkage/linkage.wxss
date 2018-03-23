@@ -2,9 +2,37 @@
 @import '../../template/index.wxss';
 
 page {
+    width: 100%;
+}
+
+.container_index {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 100rpx;
     overflow: hidden;
+}
+
+.areaSelect {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    float: inherit;
+    z-index: 4;
+}
+
+.pop_black {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.container {
+    z-index: 6;
 }
