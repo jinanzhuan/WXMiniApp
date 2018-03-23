@@ -1,0 +1,6 @@
+<!--pages/richtext/richtext.wxml-->
+<import src="../../wxParse/wxParse.wxml"/>
+<view class="wxParse">
+    <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+    <button class="submit" type="primary">提交</button>
+</view>

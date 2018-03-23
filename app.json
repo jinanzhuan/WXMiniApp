@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/linkage/linkage",
     "pages/logs/logs",
-    "pages/topbartext/topbartext"
+    "pages/topbartext/topbartext",
+    "pages/richtext/richtext"
   ],
   "window": {
     "backgroundTextStyle": "light",

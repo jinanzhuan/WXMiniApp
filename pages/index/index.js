@@ -60,5 +60,10 @@ Page({
         wx.navigateTo({
             url: '/pages/topbartext/topbartext'
         })
+    },
+    bindRichText: function (e) {
+        wx.navigateTo({
+            url: '/pages/richtext/richtext'
+        })
     }
 })

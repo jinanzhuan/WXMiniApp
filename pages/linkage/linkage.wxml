@@ -1,4 +1,5 @@
 <!--pages/linkage/linkage.wxml-->
+<import src="../../template/index.wxml"/>
 <view class="container_index">
     <view class="show">{{addressModel}}</view>
 
@@ -7,10 +8,7 @@
 
     <view class="areaSelect" wx:if="{{showModalStatus}}" animation="{{animationPopup}}" >
         <view class="pop_black" bindtap="closePop" hidden="{{hidePop}}" />
-
-        <import src="../../template/index.wxml"/>
         <template is="areaPicker" data="{{...areaPicker}}" />
-
     </view>
 </view>
 

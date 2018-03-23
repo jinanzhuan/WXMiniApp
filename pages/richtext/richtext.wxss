@@ -1,0 +1,9 @@
+/* pages/richtext/richtext.wxss */
+
+.submit {
+    position: fixed;
+    left: 10%;
+    bottom: 20rpx;
+    size: default;
+    width: 80%;
+}
