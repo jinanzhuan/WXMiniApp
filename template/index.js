@@ -13,6 +13,7 @@ function fetch(options) {
 }
 
 const API = 'http://japi.zto.cn/zto/api_utf8/baseArea?msg_type=GET_AREA&data=';
+const defaultProvince = 24;
 
 const conf = {
   addDot: function (arr) {
@@ -152,7 +153,8 @@ export default (config = {}) => {
     url: API + '0',
     method: 'GET'
   }).then((province) => {
-    const firstProvince = province.data.result[0];
+    console.log("省份=", province.data);
+    const firstProvince = province.data.result[defaultProvince];
     const dataWithDot = conf.addDot(province.data.result);
     /**
 		 * 默认选择获取的省份第一个省份数据
@@ -191,9 +193,9 @@ export default (config = {}) => {
     } else {
       const { provinceData, cityData } = self.data.areaPicker;
       self.setData({
-        'areaPicker.value': [0, 0],
-        'areaPicker.address': provinceData[0].fullName + ' - ' + cityData[0].fullName,
-        'areaPicker.selected': [provinceData[0], cityData[0]]
+        'areaPicker.value': [defaultProvince, 0],
+        'areaPicker.address': provinceData[defaultProvince].fullName + ' - ' + cityData[0].fullName,
+        'areaPicker.selected': [provinceData[defaultProvince], cityData[0]]
       });
     }
   }).then((district) => {
@@ -202,13 +204,13 @@ export default (config = {}) => {
     const dataWithDot = conf.addDot(district.data.result);
     const { provinceData, cityData } = self.data.areaPicker;
     self.setData({
-      'areaPicker.value': [0, 0, 0],
+      'areaPicker.value': [defaultProvince, 0, 0],
       'areaPicker.districtData': dataWithDot,
       'areaPicker.selectedDistrict.index': 0,
       'areaPicker.selectedDistrict.code': firstDistrict.code,
       'areaPicker.selectedDistrict.fullName': firstDistrict.fullName,
-      'areaPicker.address': provinceData[0].fullName + ' - ' + cityData[0].fullName + ' - ' + firstDistrict.fullName,
-      'areaPicker.selected': [provinceData[0], cityData[0], firstDistrict]
+      'areaPicker.address': provinceData[defaultProvince].fullName + ' - ' + cityData[0].fullName + ' - ' + firstDistrict.fullName,
+      'areaPicker.selected': [provinceData[defaultProvince], cityData[0], firstDistrict]
     });
   }).catch((e) => {
     console.error(e);

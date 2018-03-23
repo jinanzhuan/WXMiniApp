@@ -1,8 +1,9 @@
 {
   "pages": [
-    "pages/linkage/linkage",
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/linkage/linkage",
+    "pages/logs/logs",
+    "pages/topbartext/topbartext"
   ],
   "window": {
     "backgroundTextStyle": "light",

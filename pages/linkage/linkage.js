@@ -3,7 +3,7 @@ import initAreaPicker, { getSelectedAreaData } from '../../template/index';
 
 Page({
   data:{
-      showModalStatus: true,
+      showModalStatus: false,
       hidePop: false,
       addressModel: ""
   },

@@ -51,10 +51,14 @@ Page({
       hasUserInfo: true
     })
   },
-    bindLinkage: function (e) {
-        console.log("sdfjlsjdf");
+    bindArea: function (e) {
         wx.navigateTo({
           url: '/pages/linkage/linkage'
+        })
+    },
+    setTopBarText: function (e) {
+        wx.navigateTo({
+            url: '/pages/topbartext/topbartext'
         })
     }
 })

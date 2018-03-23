@@ -1,0 +1,9 @@
+<!--pages/topbartext/topbartext.wxml-->
+
+<view class="container">
+    <input name="input" placeholder="输入需要置顶的文本" bindinput="inputChange"/>
+    <button type="primary" size="default" bindtap="setTopbarText">设置置顶文本</button>
+    <button type="primary" size="default" bindtap="setNavigationBarTitle">设置标题栏文本</button>
+
+</view>
+
