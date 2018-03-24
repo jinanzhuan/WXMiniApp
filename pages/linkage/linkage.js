@@ -31,8 +31,8 @@ Page({
     },
     sure(e){
         console.log("make sure=", this.data.areaPicker.selected);
-        var provienceName = this.data.areaPicker.selected[0].fullName;
-        var cityName = this.data.areaPicker.selected[1].fullName;
+        var provienceName = this.data.areaPicker.selected[0].name;
+        var cityName = this.data.areaPicker.selected[1].name;
         var text = provienceName.concat(" ").concat(cityName);
         console.log("选择的地区=", text);
         this.setData({

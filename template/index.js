@@ -13,17 +13,17 @@ function fetch(options) {
 }
 
 const API = 'http://japi.zto.cn/zto/api_utf8/baseArea?msg_type=GET_AREA&data=';
-const defaultProvince = 24;
+const defaultProvince = 1;
 
 const conf = {
   addDot: function (arr) {
     if (arr instanceof Array) {
       const tmp = arr.slice();
       tmp.map(val => {
-        if (val.fullName.length > 4) {
-          val.fullNameDot = val.fullName.slice(0, 4) + '...';
+        if (val.name.length > 4) {
+          val.fullNameDot = val.name.slice(0, 4) + '...';
         } else {
-          val.fullNameDot = val.fullName;
+          val.fullNameDot = val.name;
         }
       });
       return tmp;
@@ -45,32 +45,46 @@ const conf = {
     if (provinceCondition) {
       // 滑动省份
       fetch({
-        url: API + provinceData[currentValue[0]].code,
+        url: API + 'assets/cities/',
+          data: {
+              prov_id: provinceData[currentValue[0]].id
+          },
         method: 'GET'
       }).then((city) => {
-        const cityData = city.data.result;
+        const cityData = city.data;
+        console.log("城市列表=",cityData);
         if (cityData && cityData.length) {
-          const dataWithDot = conf.addDot(city.data.result);
+          const dataWithDot = conf.addDot(city.data);
           this.setData({
             'areaPicker.cityData': dataWithDot
           });
-          return (
-            fetch({
-              url: API + dataWithDot[0].code,
-              method: 'GET'
-            })
-          );
+          // return (
+          //   fetch({
+          //     url: API + dataWithDot[0].code,
+          //     method: 'GET'
+          //   })
+          // );
+            return;
         } else {
           this.setData({
             'areaPicker.cityData': [],
             'areaPicker.districtData': [],
-            'areaPicker.address': provinceData[currentValue[0]].fullName,
+            'areaPicker.address': provinceData[currentValue[0]].name,
             'areaPicker.selected': [provinceData[currentValue[0]]],
           });
         }
       }).then((district) => {
-        const districtData = district.data.result;
         const { cityData } = this.data.areaPicker;
+        if(!district){
+            this.setData({
+                'areaPicker.districtData': [],
+                'areaPicker.value': [ currentValue[0], currentValue[1], 0 ],
+                'areaPicker.address': provinceData[currentValue[0]].name + ' - ' + cityData[0].name,
+                'areaPicker.selected': [provinceData[currentValue[0]], cityData[0]]
+            });
+            return;
+        }
+        const districtData = district.data.result;
         if (districtData && districtData.length > 0) {
           const dataWithDot = conf.addDot(districtData);
           this.setData({
@@ -92,32 +106,38 @@ const conf = {
       });
     } else if (cityCondition) {
       const { provinceData, cityData } = this.data.areaPicker;
-      // 滑动城市
-      fetch({
-        url: API + cityData[currentValue[1]].code,
-        method: 'GET'
-      }).then((district) => {
-        if (!district) return;
-        const districtData = district.data.result;
-        if (districtData && districtData.length > 0) {
-          const dataWithDot = conf.addDot(districtData);
-          this.setData({
-            'areaPicker.districtData': dataWithDot,
-            'areaPicker.value': [ currentValue[0], currentValue[1], 0 ],
-            'areaPicker.address': provinceData[currentValue[0]].fullName + ' - ' + cityData[currentValue[1]].fullName + (hideDistrict ? '' : ' - ' + dataWithDot[0].fullName),
-            'areaPicker.selected': hideDistrict ? [provinceData[currentValue[0]], cityData[currentValue[1]]] : [provinceData[currentValue[0]], cityData[currentValue[1]], dataWithDot[0]]
-          });
-        } else {
-          this.setData({
+        this.setData({
             'areaPicker.districtData': [],
             'areaPicker.value': [ currentValue[0], currentValue[1], 0 ],
-            'areaPicker.address': provinceData[currentValue[0]].fullName + ' - ' + cityData[currentValue[1]].fullName,
+            'areaPicker.address': provinceData[currentValue[0]].name + ' - ' + cityData[currentValue[1]].name,
             'areaPicker.selected': [provinceData[currentValue[0]], cityData[currentValue[1]]]
-          });
-        }
-      }).catch((e) => {
-        console.error(e);
-      });
+        });
+      // 滑动城市
+      // fetch({
+      //   url: API + cityData[currentValue[1]].code,
+      //   method: 'GET'
+      // }).then((district) => {
+      //   if (!district) return;
+      //   const districtData = district.data.result;
+      //   if (districtData && districtData.length > 0) {
+      //     const dataWithDot = conf.addDot(districtData);
+      //     this.setData({
+      //       'areaPicker.districtData': dataWithDot,
+      //       'areaPicker.value': [ currentValue[0], currentValue[1], 0 ],
+      //       'areaPicker.address': provinceData[currentValue[0]].fullName + ' - ' + cityData[currentValue[1]].fullName + (hideDistrict ? '' : ' - ' + dataWithDot[0].fullName),
+      //       'areaPicker.selected': hideDistrict ? [provinceData[currentValue[0]], cityData[currentValue[1]]] : [provinceData[currentValue[0]], cityData[currentValue[1]], dataWithDot[0]]
+      //     });
+      //   } else {
+      //     this.setData({
+      //       'areaPicker.districtData': [],
+      //       'areaPicker.value': [ currentValue[0], currentValue[1], 0 ],
+      //       'areaPicker.address': provinceData[currentValue[0]].fullName + ' - ' + cityData[currentValue[1]].fullName,
+      //       'areaPicker.selected': [provinceData[currentValue[0]], cityData[currentValue[1]]]
+      //     });
+      //   }
+      // }).catch((e) => {
+      //   console.error(e);
+      // });
     } else if (districtCondition) {
       const { cityData, districtData } = this.data.areaPicker;
       // 滑动地区
@@ -150,35 +170,39 @@ export default (config = {}) => {
   self.bindChange = conf.bindChange.bind(self);
 
   fetch({
-    url: API + '0',
+    // url: API + '0',
+    url: API + 'assets/provinces/',
     method: 'GET'
   }).then((province) => {
     console.log("省份=", province.data);
-    const firstProvince = province.data.result[defaultProvince];
-    const dataWithDot = conf.addDot(province.data.result);
+    const firstProvince = province.data[defaultProvince];
+    const dataWithDot = conf.addDot(province.data);
     /**
 		 * 默认选择获取的省份第一个省份数据
 		 */
     self.setData({
       'areaPicker.provinceData': dataWithDot,
       'areaPicker.selectedProvince.index': 0,
-      'areaPicker.selectedProvince.code': firstProvince.code,
-      'areaPicker.selectedProvince.fullName': firstProvince.fullName,
+      'areaPicker.selectedProvince.code': firstProvince.id,
+      'areaPicker.selectedProvince.fullName': firstProvince.name,
     });
     return (
       fetch({
-        url: API + firstProvince.code,
+        url: API + 'assets/cities/',
+         data: {
+             prov_id: firstProvince.id
+         } ,
         method: 'GET'
       })
     );
   }).then((city) => {
-    const firstCity = city.data.result[0];
-    const dataWithDot = conf.addDot(city.data.result);
+    const firstCity = city.data[0];
+    const dataWithDot = conf.addDot(city.data);
     self.setData({
       'areaPicker.cityData': dataWithDot,
       'areaPicker.selectedCity.index': 0,
-      'areaPicker.selectedCity.code': firstCity.code,
-      'areaPicker.selectedCity.fullName': firstCity.fullName,
+      'areaPicker.selectedCity.code': firstCity.id,
+      'areaPicker.selectedCity.fullName': firstCity.name,
     });
     /**
 		 * 省市二级则不请求区域
@@ -194,7 +218,7 @@ export default (config = {}) => {
       const { provinceData, cityData } = self.data.areaPicker;
       self.setData({
         'areaPicker.value': [defaultProvince, 0],
-        'areaPicker.address': provinceData[defaultProvince].fullName + ' - ' + cityData[0].fullName,
+        'areaPicker.address': provinceData[defaultProvince].name + ' - ' + cityData[0].name,
         'areaPicker.selected': [provinceData[defaultProvince], cityData[0]]
       });
     }
@@ -207,9 +231,9 @@ export default (config = {}) => {
       'areaPicker.value': [defaultProvince, 0, 0],
       'areaPicker.districtData': dataWithDot,
       'areaPicker.selectedDistrict.index': 0,
-      'areaPicker.selectedDistrict.code': firstDistrict.code,
-      'areaPicker.selectedDistrict.fullName': firstDistrict.fullName,
-      'areaPicker.address': provinceData[defaultProvince].fullName + ' - ' + cityData[0].fullName + ' - ' + firstDistrict.fullName,
+      'areaPicker.selectedDistrict.code': firstDistrict.id,
+      'areaPicker.selectedDistrict.fullName': firstDistrict.name,
+      'areaPicker.address': provinceData[defaultProvince].name + ' - ' + cityData[0].name + ' - ' + firstDistrict.name,
       'areaPicker.selected': [provinceData[defaultProvince], cityData[0], firstDistrict]
     });
   }).catch((e) => {
