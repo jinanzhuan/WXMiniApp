@@ -65,5 +65,15 @@ Page({
         wx.navigateTo({
             url: '/pages/richtext/richtext'
         })
+    },
+    bindScrollView: function (e) {
+        wx.navigateTo({
+            url: '/pages/scrollview/scrollview'
+        })
+    },
+    bindDate: function (e) {
+        wx.navigateTo({
+            url: '/pages/date/date'
+        })
     }
 })

@@ -3,4 +3,6 @@
   <button type="primary" size="default" bindtap="bindArea">省市联动</button>
   <button type="primary" size="default" bindtap="setTopBarText">设置置顶栏文字内容</button>
   <button type="primary" size="default" bindtap="bindRichText">富文本</button>
+  <button type="primary" size="default" bindtap="bindScrollView">滑动</button>
+  <button type="primary" size="default" bindtap="bindDate">js中的Date</button>
 </view>

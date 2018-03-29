@@ -1,0 +1,38 @@
+<!--pages/date/date.wxml-->
+    <view class="item">
+        <text class="title" bindtap="formatTime">获取当前时间：</text>
+        <text class="content">{{formatTime}}</text>
+    </view>
+    <view class="item">
+        <text class="title" bindtap="formatDate">获取当前日期：</text>
+        <text class="content">{{formatDate}}</text>
+    </view>
+    <view class="item">
+        <text class="title" bindtap="formatDateByH">获取当前日期以“-”连接：</text>
+        <text class="content">{{formatDateByH}}</text>
+    </view>
+    <view class="item">
+        <text class="title" bindtap="formatDateToSimple">获取当前日期不包含年：</text>
+        <text class="content">{{formatDateToSimple}}</text>
+    </view>
+    <view class="item">
+        <text class="title" bindtap="formatDateToWeek">获取日期的星期：</text>
+        <text class="content">{{formatDateToWeek}}</text>
+    </view>
+    <view class="item">
+        <text class="title" bindtap="addDay">日期天数的增加：</text>
+        <input value="{{bindAddDay}}" placeholder="请输入增加的天数" bindinput="bindAddDay"/>
+        <text class="content">{{addDay}}</text>
+    </view>
+    <view class="item">
+        <text class="title" bindtap="addMonth">日期月份的增加：</text>
+        <input value="{{bindAddMonth}}" placeholder="请输入增加的天数" bindinput="bindAddMonth"/>
+        <text class="content">{{addMonth}}</text>
+    </view>
+    <view class="item">
+        <text class="title" bindtap="getDayByAddDay">日期增加day后：</text>
+        <input value='{{bindGetDayByAddDay}}' placeholder="请输入增加的天数" bindinput="bindGetDayByAddDay"/>
+        <text class="content">{{getDayByAddDay}}</text>
+    </view>
+
+    <button type="default" bindtap="clear">清空</button>

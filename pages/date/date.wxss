@@ -1,0 +1,29 @@
+/* pages/date/date.wxss */
+
+.item {
+    height: 100rpx;
+    margin: 10rpx;
+    border: 1rpx solid gray;
+    border-radius: 10rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.title {
+    margin-left: 20rpx;
+    font-size: 32rpx;
+}
+
+input {
+    display: inline-block;
+    width: 150rpx;
+    height: 80%;
+    border: 1rpx solid gray;
+    border-radius: 10rpx;
+}
+
+.content{
+    margin-left: 20rpx;
+    font-size: 32rpx;
+}

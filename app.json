@@ -4,7 +4,9 @@
     "pages/linkage/linkage",
     "pages/logs/logs",
     "pages/topbartext/topbartext",
-    "pages/richtext/richtext"
+    "pages/richtext/richtext",
+    "pages/scrollview/scrollview",
+    "pages/date/date"
   ],
   "window": {
     "backgroundTextStyle": "light",
